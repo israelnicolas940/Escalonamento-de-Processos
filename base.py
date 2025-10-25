@@ -11,7 +11,6 @@ class Task:
     arrival: int
     proc_time: int
     priority: int
-    aging: int
 
 
 @dataclass
