@@ -1,6 +1,6 @@
 from processo import Processo
 from utilidades import Calc_AvgWaitTime, Calc_AvgWaitTurn
-from schedulers import Scheduler_FCFS, Scheduler_SJF, Scheduler_SRTF, Scheduler_PrioSp, Scheduler_PrioCp, Scheduler_RRSp, Scheduler_RRCp
+from escalonadores import Scheduler_FCFS, Scheduler_SJF, Scheduler_SRTF, Scheduler_PrioSp, Scheduler_PrioCp, Scheduler_RRSp, Scheduler_RRCp
 
 # Lendo o arquivo de configuração e obtendo...
 arquivo_config = "config.txt"
