@@ -10,6 +10,8 @@ class Task:
     pid: int
     arrival: int
     proc_time: int
+    priority: int
+    aging: int
 
 
 @dataclass
@@ -43,4 +45,4 @@ class Scheduler:
         schedule_res = self.algorithm.schedule(self.tasks)
 
         metrics_res: metrics.Metrics = metrics.compute_metrics(schedule_res, self.tasks)
-        return {metrics_res, metrics.to_global_timeline(schedule_res)}
+        return (metrics_res, metrics.to_global_timeline(schedule_res))

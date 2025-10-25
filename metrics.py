@@ -45,7 +45,7 @@ def to_global_timeline(
             raise ValueError(
                 f"Invalid timeslice for pid {pid}: start >= end ({start} >= {end})"
             )
-        if merged[-1].pid == pid and merged[-1].start_time == start:
+        if merged and merged[-1].pid == pid and merged[-1].start_time == start:
             # mesclar fatias contíguas do mesmo pid
             merged[-1] = Timeline(merged[-1].pid, end, pid)
         else:
