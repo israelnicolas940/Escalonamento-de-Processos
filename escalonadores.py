@@ -260,6 +260,7 @@ def Scheduler_RRCp(Processos, Disponiveis, Terminados, cntxt_chngs, qntm, aging)
             proc_atual.end_time = time # Obtemos seu tempo de finalização e...
             Terminados.append(proc_atual) # Adicionamos ele à lista de terminados
         else:
+            proc_atual.prior_aux = proc_atual.prior # Anula o envelhecimento resetando a prioridade
             Disponiveis.append(proc_atual)
         
     return Timeline, cntxt_chngs
