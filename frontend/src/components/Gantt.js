@@ -1,24 +1,18 @@
 import React from "react";
 
-/**
- * Exibe um Gantt Chart alinhado pelo tempo real.
- * Exemplo:
- * Tempo: 0---1---2---3---4---5---6
- *         [P1][   ][P2][P2][P3][  ]
- */
 export default function Gantt({ timeline }) {
   if (!timeline || timeline.length === 0) return null;
 
-  // Calcula tempo máximo (último fim)
+  // Always start at time 0
+  const minTime = 0;
   const maxTime = Math.max(...timeline.map((t) => t.end));
-  const minTime = Math.min(...timeline.map((t) => t.start));
-  const totalWidth = (maxTime - minTime + 1) * 40; // 40px = 1 unidade de tempo
+  const unitWidth = 60; // pixels per time unit
 
-  // Gera blocos posicionados proporcionalmente no eixo temporal
-  const slots = timeline.map((t, i) => ({
+  // Map bars
+  const slots = timeline.map((t) => ({
     ...t,
-    left: (t.start - minTime) * 40,
-    width: (t.end - t.start) * 40,
+    left: t.start * unitWidth,
+    width: (t.end - t.start) * unitWidth,
   }));
 
   return (
@@ -29,13 +23,14 @@ export default function Gantt({ timeline }) {
         className="gantt-grid"
         style={{
           position: "relative",
-          height: "60px",
+          height: "80px",
           borderBottom: "1px solid rgba(255,255,255,0.1)",
-          width: `${totalWidth}px`,
           overflowX: "auto",
+          whiteSpace: "nowrap",
+          paddingBottom: "10px",
         }}
       >
-        {/* Barras */}
+        {/* Bars */}
         {slots.map((slot, i) => (
           <div
             key={i}
@@ -61,22 +56,23 @@ export default function Gantt({ timeline }) {
           </div>
         ))}
 
-        {/* Eixo do tempo */}
+        {/* Time axis — perfectly aligned at edges */}
         <div
           style={{
             position: "absolute",
-            top: "50px",
+            top: "55px",
+            left: 0,
             display: "flex",
             fontSize: "11px",
-            color: "var(--muted)",
+            color: "rgba(255,255,255,0.7)",
           }}
         >
           {Array.from({ length: maxTime - minTime + 1 }, (_, i) => (
             <div
               key={i}
               style={{
-                width: "40px",
-                textAlign: "center",
+                width: `${unitWidth}px`,
+                textAlign: "left",
               }}
             >
               {minTime + i}

@@ -19,6 +19,7 @@ class Task:
     pid: int
     arrival: int
     proc_time: int
+    priority: int
 
 
 @dataclass(frozen=True)

@@ -3,8 +3,11 @@ import React from "react";
 export default function Controls({
   algorithm,
   setAlgorithm,
-  mode,
-  setMode,
+  quantum,
+  setQuantum,
+  aging,
+  setAging,
+  needsQuantum,
   onAddProcess,
   onClearProcesses,
   onStart,
@@ -15,34 +18,53 @@ export default function Controls({
     <div className="controls">
       <div className="control-row">
         <label>
-          Algorithm
+          Algoritmo
           <select
             value={algorithm}
             onChange={(e) => setAlgorithm(e.target.value)}
           >
-            <option value="fcfs">First Come First Served</option>
-            <option value="sjf">Shortest Job First</option>
-            <option value="srtf">Shortest Remaining Time First</option>
-            <option value="rr">Round Robin</option>
+            <option value="fcfs">First Come First Served (FCFS)</option>
+            <option value="sjf">Shortest Job First (SJF)</option>
+            <option value="srtf">Shortest Remaining Time First (SRTF)</option>
+            <option value="pc">Prioridade Cooperativo (Não-preemptivo)</option>
+            <option value="pp">Prioridade Preemptivo</option>
+            <option value="rr">Round Robin (RR)</option>
+            <option value="rra">Round Robin com Envelhecimento</option>
           </select>
         </label>
 
-        <label>
-          Mode
-          <select value={mode} onChange={(e) => setMode(e.target.value)}>
-            <option value="all">All at once</option>
-            <option value="step">Step by step</option>
-          </select>
-        </label>
+        {needsQuantum && (
+          <label>
+            Quantum
+            <input
+              type="number"
+              min="1"
+              value={quantum}
+              onChange={(e) => setQuantum(parseInt(e.target.value) || 1)}
+            />
+          </label>
+        )}
+
+        {algorithm === "rra" && (
+          <label>
+            Aging (Envelhecimento)
+            <input
+              type="number"
+              min="0"
+              value={aging}
+              onChange={(e) => setAging(parseInt(e.target.value) || 0)}
+            />
+          </label>
+        )}
       </div>
 
-      <div className="control-row actions">
+      <div className="actions">
         <div className="left-actions">
           <button
             type="button"
             onClick={onAddProcess}
             className="btn-add"
-            title="Add process"
+            title="Adicionar processo"
           >
             +
           </button>
@@ -50,7 +72,7 @@ export default function Controls({
             type="button"
             onClick={onClearProcesses}
             className="btn-clear"
-            title="Clear all"
+            title="Limpar tudo"
           >
             ×
           </button>
@@ -60,9 +82,8 @@ export default function Controls({
           className="start-btn"
           onClick={onStart}
           disabled={loading || !processesCount}
-          title="Start simulation"
         >
-          {loading ? "RUNNING..." : "START SIMULATION"}
+          {loading ? "EXECUTANDO..." : "COMEÇAR SIMULAÇÃO"}
         </button>
       </div>
     </div>

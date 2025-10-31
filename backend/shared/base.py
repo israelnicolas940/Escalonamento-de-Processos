@@ -1,7 +1,7 @@
 from typing import List, Dict, Tuple
 from abc import ABC, abstractmethod
-import metrics
-from models import Metrics, Task, TimeSlice, Timeline
+from . import metrics
+from .models import Metrics, Task, TimeSlice, Timeline
 
 
 class SchedulerAlgorithm(ABC):
